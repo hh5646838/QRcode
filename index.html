@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>个性二维码生成器 · 引流神器</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="lib/qrcode.min.js"></script>
+  <script src="lib/html2canvas.min.js"></script>
+</head>
+<body>
+  <!-- 顶部导航栏 -->
+  <nav class="navbar">
+    <div class="nav-left">
+      <div class="nav-avatar" id="navAvatar" title="点击关注">
+        <img id="navAvatarImg" src="" alt="avatar" />
+      </div>
+      <div class="nav-brand">
+        <span class="nav-title" id="navTitle">个性二维码生成器</span>
+        <span class="nav-subtitle" id="navSubtitle">引流神器 · 一键生成精美海报</span>
+      </div>
+    </div>
+    <div class="nav-right">
+      <div class="nav-tools" id="navTools"></div>
+      <button class="btn-follow" id="btnFollow">+ 关注我</button>
+    </div>
+  </nav>
+
+  <!-- 主容器 -->
+  <main class="main-container">
+    <!-- 左侧表单区 -->
+    <section class="panel panel-left">
+      <div class="form-section">
+        <h2 class="form-step-title"><span class="step-num">1</span>二维码核心内容设置 <span class="required">*</span></h2>
+        <div class="form-group">
+          <label class="form-label">网址或文本内容 <span class="required">*</span></label>
+          <textarea class="form-input form-textarea" id="inputUrl" placeholder="请输入网址或任意文本，例如：https://example.com" rows="3"></textarea>
+          <p class="form-hint" id="urlHint">支持任意网址或文本内容，实时生成二维码</p>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h2 class="form-step-title"><span class="step-num">2</span>引流海报附加文案</h2>
+        <div class="form-group">
+          <label class="form-label">顶部标题</label>
+          <input type="text" class="form-input" id="inputTopTitle" placeholder="如：扫一扫加入交流群" maxlength="30" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">底部标题</label>
+          <input type="text" class="form-input" id="inputBottomTitle" placeholder="如：获取独家干货资料" maxlength="30" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">引导副标题</label>
+          <input type="text" class="form-input" id="inputSubtitle" placeholder="如：长按识别二维码，开启高效复盘" maxlength="40" />
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h2 class="form-step-title"><span class="step-num">3</span>二维码高级样式定制</h2>
+        <div class="form-row">
+          <div class="form-group form-group-half">
+            <label class="form-label">前景色（码点）</label>
+            <div class="color-picker-wrap">
+              <input type="color" id="inputForeground" value="#1a1a2e" />
+              <span class="color-hex" id="foregroundHex">#1a1a2e</span>
+            </div>
+          </div>
+          <div class="form-group form-group-half">
+            <label class="form-label">背景色</label>
+            <div class="color-picker-wrap">
+              <input type="color" id="inputBackground" value="#ffffff" />
+              <span class="color-hex" id="backgroundHex">#ffffff</span>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">样式风格</label>
+          <div class="style-options" id="styleOptions"></div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">中心 Logo（可选）</label>
+          <div class="logo-upload-wrap">
+            <label class="logo-upload-btn" for="inputLogo">
+              <span>📷 上传 Logo 图片</span>
+            </label>
+            <input type="file" id="inputLogo" accept="image/*" hidden />
+            <button class="btn-clear-logo" id="btnClearLogo" style="display:none;">移除 Logo</button>
+            <div class="logo-preview" id="logoPreview"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h2 class="form-step-title"><span class="step-num">4</span>海报卡片模板</h2>
+        <div class="form-group">
+          <label class="form-label">选择模板风格</label>
+          <div class="template-options" id="templateOptions"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 右侧预览区 -->
+    <section class="panel panel-right">
+      <div class="preview-header">
+        <h2 class="preview-title">实时预览</h2>
+        <div class="preview-actions">
+          <button class="btn-download-qr" id="btnDownloadQR">📥 下载二维码方图</button>
+          <button class="btn-download-poster" id="btnDownloadPoster">📥 下载高清二维码海报</button>
+        </div>
+      </div>
+      <div class="preview-scroll">
+        <div class="poster-card" id="posterCard">
+          <div class="poster-top">
+            <h2 class="poster-top-title" id="previewTopTitle">扫一扫加入交流群</h2>
+          </div>
+          <div class="poster-qr-section">
+            <div class="qr-frame">
+              <canvas id="qrCanvas" width="600" height="600"></canvas>
+            </div>
+            <p class="poster-subtitle" id="previewSubtitle">长按识别二维码，开启高效复盘</p>
+          </div>
+          <div class="poster-bottom">
+            <h3 class="poster-bottom-title" id="previewBottomTitle">获取独家干货资料</h3>
+            <div class="poster-decor">
+              <span class="decor-dot"></span>
+              <span class="decor-line decor-line-left"></span>
+              <span class="decor-ring">
+                <span class="decor-symbol">❋</span>
+              </span>
+              <span class="decor-line decor-line-right"></span>
+              <span class="decor-dot"></span>
+            </div>
+          </div>
+          <div class="poster-timestamp" id="posterTimestamp">00:00:00</div>
+        </div>
+      </div>
+      <div class="qr-download-options" id="qrDownloadOptions" style="display:none;">
+        <div class="qr-download-panel">
+          <h4>下载二维码方图</h4>
+          <label class="checkbox-label">
+            <input type="checkbox" id="transparentBg" />
+            <span>透明背景（PNG）</span>
+          </label>
+          <div class="qr-download-actions">
+            <button class="btn-confirm" id="btnConfirmQRDownload">确认下载</button>
+            <button class="btn-cancel" id="btnCancelQRDownload">取消</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 关注弹窗（强硬弹窗，只能点×关闭） -->
+  <div class="modal-overlay" id="followModal">
+    <div class="modal-box modal-follow">
+      <button class="modal-close" id="followModalClose">×</button>
+      <div class="follow-modal-content">
+        <div class="follow-avatar-wrap">
+          <img id="followModalAvatar" src="" alt="avatar" />
+        </div>
+        <h3 class="follow-modal-title">关注公众号</h3>
+        <p class="follow-modal-name" id="followModalName">JoJo茶酒志</p>
+        <p class="follow-modal-desc" id="followModalDesc">茶酒文化 · 深度内容 · 每周更新</p>
+        <div class="follow-modal-qr">
+          <div class="follow-qr-placeholder">
+            <span>📱</span>
+            <p>长按识别二维码关注</p>
+          </div>
+        </div>
+        <p class="follow-modal-tip" id="followModalTip">长按识别二维码关注公众号</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 猫咪泪眼弹窗（彩蛋） -->
+  <div class="modal-overlay" id="catModal">
+    <div class="modal-box modal-cat">
+      <div class="cat-emoji">🐱 🥺</div>
+      <p class="cat-modal-text" id="catModalText"></p>
+      <div class="cat-modal-qr">
+        <div class="cat-qr-placeholder">
+          <span>📱</span>
+          <p>微信扫码支持</p>
+        </div>
+      </div>
+      <button class="cat-modal-btn" id="catModalBtn" disabled>
+        <span id="catBtnText">已知晓，继续使用 (5s)</span>
+      </button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

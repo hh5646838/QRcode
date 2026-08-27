@@ -1,0 +1,94 @@
+{
+  "site": {
+    "title": "个性二维码生成器",
+    "subtitle": "引流神器 · 一键生成精美海报"
+  },
+  "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=JoJoQR&backgroundColor=b6e3f4",
+  "moreTools": {
+    "name": "更多工具",
+    "url": "https://example.com/tools"
+  },
+  "officialAccount": {
+    "name": "JoJo茶酒志",
+    "desc": "茶酒文化 · 深度内容 · 每周更新",
+    "followTip": "长按识别二维码关注公众号"
+  },
+  "qrcode": {
+    "defaultUrl": "https://example.com/my-profile",
+    "defaultTopTitle": "扫一扫加入交流群",
+    "defaultBottomTitle": "获取独家干货资料",
+    "defaultSubtitle": "长按识别二维码，开启高效复盘",
+    "defaultForeground": "#1a1a2e",
+    "defaultBackground": "#ffffff",
+    "defaultStyle": "rounded",
+    "defaultTemplate": "cream"
+  },
+  "qrStyles": [
+    { "id": "classic", "name": "经典方块" },
+    { "id": "rounded", "name": "圆润圆角点阵" },
+    { "id": "artistic", "name": "艺术点阵" }
+  ],
+  "templates": [
+    {
+      "id": "cream",
+      "name": "✨ ins 奶油风",
+      "bg": "linear-gradient(160deg, #faf6f0 0%, #f5ede2 50%, #efe5d6 100%)",
+      "accent": "#c26b5a",
+      "textColor": "#5c3d2e",
+      "cardBg": "rgba(255,255,255,0.55)",
+      "borderColor": "rgba(194,107,90,0.2)"
+    },
+    {
+      "id": "minimal",
+      "name": "⚪ 极简风",
+      "bg": "#f7f7f8",
+      "accent": "#222222",
+      "textColor": "#1a1a1a",
+      "cardBg": "#ffffff",
+      "borderColor": "#e5e5e5"
+    },
+    {
+      "id": "dark",
+      "name": "🌙 暗夜黑金",
+      "bg": "linear-gradient(160deg, #0f0f1a 0%, #1a1a3e 50%, #2d1b4e 100%)",
+      "accent": "#f0c674",
+      "textColor": "#f0ece2",
+      "cardBg": "rgba(255,255,255,0.06)",
+      "borderColor": "rgba(240,198,116,0.3)"
+    },
+    {
+      "id": "mint",
+      "name": "🌿 清新薄荷",
+      "bg": "linear-gradient(160deg, #eafaf1 0%, #d4efdf 45%, #a9dfbf 100%)",
+      "accent": "#1e8449",
+      "textColor": "#145a32",
+      "cardBg": "rgba(255,255,255,0.6)",
+      "borderColor": "rgba(30,132,73,0.2)"
+    },
+    {
+      "id": "lavender",
+      "name": "💜 梦幻紫",
+      "bg": "linear-gradient(160deg, #f4ecf7 0%, #e8daef 45%, #d2b4de 100%)",
+      "accent": "#7d3c98",
+      "textColor": "#4a235a",
+      "cardBg": "rgba(255,255,255,0.55)",
+      "borderColor": "rgba(125,60,152,0.2)"
+    },
+    {
+      "id": "ocean",
+      "name": "🌊 深海蓝",
+      "bg": "linear-gradient(160deg, #e3f2fd 0%, #bbdefb 45%, #90caf9 100%)",
+      "accent": "#1565c0",
+      "textColor": "#0d47a1",
+      "cardBg": "rgba(255,255,255,0.55)",
+      "borderColor": "rgba(21,101,192,0.2)"
+    }
+  ],
+  "catPopup": {
+    "firstTriggerThreshold": 6,
+    "repeatInterval": 3,
+    "countdownSeconds": 5,
+    "content": "阅读广告是网站维持的根本，微信扫描下方二维码阅读并点击文末的广告支持我们吧！当然,你也可以选择残忍关掉弹窗继续免费使用。",
+    "buttonText": "已知晓，继续使用"
+  }
+}
