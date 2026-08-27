@@ -14,6 +14,22 @@
       name: '更多工具',
       url: 'https://example.com/tools'
     },
+    help: {
+      name: '帮助',
+      title: '使用帮助',
+      content: '1. 在左侧输入网址或文本内容，实时生成二维码。\n2. 可自定义前景色、背景色、码点样式和中心 Logo。\n3. 选择海报模板风格，搭配顶部/底部标题和引导副标题。\n4. 点击「下载二维码方图」获取纯二维码图片，支持透明背景。\n5. 点击「下载高清二维码海报」获取带文案的完整海报。'
+    },
+    disclaimer: {
+      enabled: true,
+      title: '声明',
+      intro: '本站仅提供转换功能',
+      rules: [
+        '不要使用生成的二维码传播违法信息',
+        '如果是隐私链接自己保护好，不要随意分享'
+      ],
+      checkboxText: '已知晓',
+      buttonText: '我已知晓 继续使用'
+    },
     officialAccount: {
       name: 'JoJo茶酒志',
       desc: '茶酒文化 · 深度内容 · 每周更新',
@@ -321,6 +337,18 @@
 
   function renderNavTools() {
     dom.navTools.innerHTML = '';
+
+    // 帮助按钮
+    const helpCfg = config.help;
+    if (helpCfg && helpCfg.name) {
+      const helpBtn = document.createElement('button');
+      helpBtn.className = 'nav-help-btn';
+      helpBtn.textContent = helpCfg.name;
+      helpBtn.addEventListener('click', showHelpModal);
+      dom.navTools.appendChild(helpBtn);
+    }
+
+    // 更多工具链接
     const mt = config.moreTools;
     if (!mt || !mt.url) return;
     const link = document.createElement('a');
@@ -444,6 +472,51 @@
     dom.catModal.classList.remove('show');
   }
 
+  /* ---------- 声明弹窗（每次打开弹出） ---------- */
+  function showDisclaimerModal() {
+    const cfg = config.disclaimer;
+    if (!cfg || !cfg.enabled) return;
+
+    dom.disclaimerTitle.textContent = cfg.title || '声明';
+    dom.disclaimerIntro.textContent = cfg.intro || '';
+    dom.disclaimerCheckboxText.textContent = cfg.checkboxText || '已知晓';
+    dom.disclaimerBtnText.textContent = cfg.buttonText || '我已知晓 继续使用';
+
+    // 渲染规则列表
+    dom.disclaimerRules.innerHTML = '';
+    if (Array.isArray(cfg.rules)) {
+      cfg.rules.forEach((rule, i) => {
+        const li = document.createElement('li');
+        li.textContent = `${i + 1}. ${rule}`;
+        dom.disclaimerRules.appendChild(li);
+      });
+    }
+
+    // 重置勾选状态和按钮
+    dom.disclaimerCheckbox.checked = false;
+    dom.disclaimerBtn.disabled = true;
+
+    dom.disclaimerModal.classList.add('show');
+  }
+
+  function hideDisclaimerModal() {
+    dom.disclaimerModal.classList.remove('show');
+  }
+
+  /* ---------- 帮助弹窗 ---------- */
+  function showHelpModal() {
+    const cfg = config.help;
+    if (!cfg) return;
+    dom.helpTitle.textContent = cfg.title || '使用帮助';
+    // 支持 \n 换行
+    dom.helpContent.innerHTML = (cfg.content || '').replace(/\n/g, '<br/>');
+    dom.helpModal.classList.add('show');
+  }
+
+  function hideHelpModal() {
+    dom.helpModal.classList.remove('show');
+  }
+
   /* ---------- 关注弹窗（强硬弹窗） ---------- */
   function showFollowModal() {
     dom.followModal.classList.add('show');
@@ -497,7 +570,9 @@
       'btnDownloadQR', 'btnDownloadPoster',
       'qrDownloadOptions', 'transparentBg', 'btnConfirmQRDownload', 'btnCancelQRDownload',
       'followModal', 'followModalClose', 'followModalAvatar', 'followModalName', 'followModalDesc', 'followModalTip',
-      'catModal', 'catModalText', 'catModalBtn', 'catBtnText'
+      'catModal', 'catModalText', 'catModalBtn', 'catBtnText',
+      'disclaimerModal', 'disclaimerTitle', 'disclaimerIntro', 'disclaimerRules', 'disclaimerCheckbox', 'disclaimerCheckboxText', 'disclaimerBtn', 'disclaimerBtnText',
+      'helpModal', 'helpModalClose', 'helpTitle', 'helpContent'
     ];
     ids.forEach(id => { dom[id] = $(id); });
   }
@@ -584,6 +659,18 @@
 
     // 猫咪弹窗：只能点 button 关闭
     dom.catModalBtn.addEventListener('click', hideCatPopup);
+
+    // 声明弹窗：勾选后按钮才可点击
+    dom.disclaimerCheckbox.addEventListener('change', () => {
+      dom.disclaimerBtn.disabled = !dom.disclaimerCheckbox.checked;
+    });
+    dom.disclaimerBtn.addEventListener('click', hideDisclaimerModal);
+
+    // 帮助弹窗：点 × 或遮罩层关闭
+    dom.helpModalClose.addEventListener('click', hideHelpModal);
+    dom.helpModal.addEventListener('click', (e) => {
+      if (e.target === dom.helpModal) hideHelpModal();
+    });
   }
 
   async function loadConfig() {
@@ -597,6 +684,12 @@
       config.officialAccount = Object.assign({}, DEFAULT_CONFIG.officialAccount, data.officialAccount || {});
       config.qrcode = Object.assign({}, DEFAULT_CONFIG.qrcode, data.qrcode || {});
       config.catPopup = Object.assign({}, DEFAULT_CONFIG.catPopup, data.catPopup || {});
+      config.help = Object.assign({}, DEFAULT_CONFIG.help, data.help || {});
+      config.disclaimer = Object.assign({}, DEFAULT_CONFIG.disclaimer, data.disclaimer || {});
+      // disclaimer.rules 需要单独处理（数组不能用 Object.assign 合并）
+      if (data.disclaimer && Array.isArray(data.disclaimer.rules)) {
+        config.disclaimer.rules = data.disclaimer.rules;
+      }
       if (!config.moreTools || typeof config.moreTools !== 'object') config.moreTools = DEFAULT_CONFIG.moreTools;
       if (!Array.isArray(config.qrStyles) || config.qrStyles.length === 0) config.qrStyles = DEFAULT_CONFIG.qrStyles;
       if (!Array.isArray(config.templates) || config.templates.length === 0) config.templates = DEFAULT_CONFIG.templates;
@@ -633,6 +726,9 @@
     setInterval(updateTimestamp, 1000);
 
     console.log(`[统计] 累计下载数: ${getCount()}`);
+
+    // 每次打开站点弹出声明
+    showDisclaimerModal();
   }
 
   // 启动

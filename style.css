@@ -967,6 +967,141 @@ html, body {
   cursor: not-allowed;
 }
 
+/* 导航帮助按钮 */
+.nav-help-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 14px;
+  background: var(--bg-page);
+  border-radius: 20px;
+  font-size: 12px;
+  color: var(--text-sub);
+  text-decoration: none;
+  transition: var(--transition);
+  white-space: nowrap;
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-family: inherit;
+}
+.nav-help-btn::before {
+  content: '?';
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+}
+.nav-help-btn:hover {
+  background: var(--primary-light);
+  color: var(--primary-dark);
+  border-color: var(--primary);
+}
+
+/* 声明弹窗 */
+.modal-disclaimer {
+  text-align: center;
+  max-width: 420px;
+}
+.disclaimer-icon {
+  font-size: 40px;
+  margin-bottom: 12px;
+}
+.disclaimer-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: 8px;
+}
+.disclaimer-intro {
+  font-size: 14px;
+  color: var(--text-sub);
+  margin-bottom: 18px;
+  font-weight: 600;
+}
+.disclaimer-rules {
+  text-align: left;
+  list-style: none;
+  padding: 16px 20px;
+  background: var(--bg-page);
+  border-radius: var(--radius-md);
+  margin-bottom: 20px;
+}
+.disclaimer-rules li {
+  font-size: 13px;
+  color: var(--text-main);
+  line-height: 1.8;
+  padding: 4px 0;
+}
+.disclaimer-checkbox-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--text-sub);
+  cursor: pointer;
+  margin-bottom: 16px;
+  user-select: none;
+}
+.disclaimer-checkbox-label input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: var(--primary);
+}
+.disclaimer-btn {
+  width: 100%;
+  padding: 13px;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+  background: #d1d5db;
+  color: #6b7280;
+  font-family: inherit;
+}
+.disclaimer-btn:not(:disabled) {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: #fff;
+  cursor: pointer;
+}
+.disclaimer-btn:not(:disabled):hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(99,102,241,0.4);
+}
+.disclaimer-btn:disabled {
+  cursor: not-allowed;
+}
+
+/* 帮助弹窗 */
+.modal-help {
+  max-width: 480px;
+}
+.help-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: 16px;
+  padding-right: 32px;
+}
+.help-content {
+  font-size: 13px;
+  color: var(--text-sub);
+  line-height: 2;
+  padding: 16px 20px;
+  background: var(--bg-page);
+  border-radius: var(--radius-md);
+}
+
 /* ===== 响应式：手机端 ===== */
 @media (max-width: 900px) {
   .navbar {

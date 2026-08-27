@@ -189,6 +189,32 @@
     </div>
   </div>
 
+  <!-- 声明弹窗（每次打开弹出，需勾选确认） -->
+  <div class="modal-overlay" id="disclaimerModal">
+    <div class="modal-box modal-disclaimer">
+      <div class="disclaimer-icon">⚠️</div>
+      <h3 class="disclaimer-title" id="disclaimerTitle">声明</h3>
+      <p class="disclaimer-intro" id="disclaimerIntro">本站仅提供转换功能</p>
+      <ul class="disclaimer-rules" id="disclaimerRules"></ul>
+      <label class="disclaimer-checkbox-label">
+        <input type="checkbox" id="disclaimerCheckbox" />
+        <span id="disclaimerCheckboxText">已知晓</span>
+      </label>
+      <button class="disclaimer-btn" id="disclaimerBtn" disabled>
+        <span id="disclaimerBtnText">我已知晓 继续使用</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- 帮助弹窗 -->
+  <div class="modal-overlay" id="helpModal">
+    <div class="modal-box modal-help">
+      <button class="modal-close" id="helpModalClose">×</button>
+      <h3 class="help-title" id="helpTitle">使用帮助</h3>
+      <div class="help-content" id="helpContent"></div>
+    </div>
+  </div>
+
   <script src="app.js"></script>
 </body>
 </html>
