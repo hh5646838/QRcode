@@ -1,9 +1,9 @@
 {
   "site": {
-    "title": "个性二维码生成器",
+    "title": "JoJo的个性二维码生成器",
     "subtitle": "引流神器 · 一键生成精美海报"
   },
-  "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=JoJoQR&backgroundColor=b6e3f4",
+  "avatar": "https://res.cloudinary.com/vljhnkvn/image/upload/w_300,f_auto,q_auto/v1787087515/logo_jojo.jpg",
   "moreTools": {
     "name": "更多工具",
     "url": "https://example.com/tools"
@@ -25,9 +25,9 @@
     "buttonText": "我已知晓 继续使用"
   },
   "officialAccount": {
-    "name": "JoJo茶酒志",
-    "desc": "茶酒文化 · 深度内容 · 每周更新",
-    "followTip": "长按识别二维码关注公众号"
+    "name": "JoJo的AI世界",
+    "desc": "AI世界 · 深度内容 · 每周更新",
+    "followTip": "微信扫码二维码关注公众号"
   },
   "qrcode": {
     "defaultUrl": "https://example.com/my-profile",
